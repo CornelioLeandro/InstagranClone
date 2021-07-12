@@ -40,7 +40,7 @@ public class CustomDialog extends Dialog {
         setContentView(R.layout.dialog_custom);
 
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        titleView = findViewById(R.id.dialog_title);
         dialogLinearlayout = findViewById(R.id.dialog_container);
         layoutParams.setMargins(30, 50, 30, 50);
     }

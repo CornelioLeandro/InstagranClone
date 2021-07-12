@@ -43,4 +43,6 @@
     <string name="logout">Deseja sair?</string>
     <string name="logout_action">Sair</string>
     <string name="cancel">Cancel</string>
+    <string name="fav">Favorito</string>
+    <string name="import_facebook">Importar do facebook</string>
 </resources>
