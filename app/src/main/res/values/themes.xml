@@ -14,6 +14,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!--....................EDIT TEXT FORMULARIOS ..........................................-->
+
     <style name="FormContainer">
         <item name="android:layout_marginStart">36dp</item>
         <item name="android:layout_marginEnd">36dp</item>
@@ -34,18 +37,13 @@
         <item name="android:background">@drawable/edit_text_background</item>
     </style>
 
-    <style name="instaFormButton" parent="FormContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_marginBottom">24dp</item>
-        <item name="android:background">@drawable/button_background</item>
+    <style name="InstaFormEditTextError">
+        <item name="android:textColor">@color/red</item>
     </style>
 
+    <!-- .............Textos basicos TEXT VIEW..............................................-->
 
---------------Textos basicos TEXT VIEW--------------------------------------------------
-    <style name="InstaTextViewBase" >
+    <style name="InstaTextViewBase">
         <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -58,7 +56,18 @@
         <item name="android:textAlignment">center</item>
         <item name="android:layout_marginBottom">24dp</item>
     </style>
-----------------------------------------------------------------------------------------
+
+    <style name="instaTexViewbBaseDialog">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+    <!--  ......................BOTAO CUSTOMIZADO ..........................................-->
+
     <style name="instaFormButton.Link">
         <item name="android:textColor">@color/blueEnable</item>
         <item name="android:background">@null</item>
@@ -66,10 +75,13 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="InstaFormEditTextError">
-        <item name="android:textColor">@color/red</item>
+    <style name="instaFormButton" parent="FormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:background">@drawable/button_background</item>
     </style>
-
-
 
 </resources>
