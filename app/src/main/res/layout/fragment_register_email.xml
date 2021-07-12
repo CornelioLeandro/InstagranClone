@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".register.presentation.RegisterActivity"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_register">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/photo_icon" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_edittext_email_input"
+        style="@style/instaFormEditTextInput"
+        app:errorTextAppearance="@style/InstaFormEditTextError"
+        app:hintEnabled="false"
+        >
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/register_edittext_email"
+            style="@style/instaFormEditText"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.leandro.instagram.login.presentation.LoadingButton
+        android:id="@+id/register_button_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/next" />
+
+    <View
+        android:id="@+id/dividor_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grayDark" />
+
+    <TextView
+        android:id="@+id/login_textview_login"
+        style="@style/InstaTextViewBase"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/already_has_account" />
+
+</LinearLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".login.presentation.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/login_imageview_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginBottom="48dp"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:src="@drawable/instagram_logo_black" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_edittext_email_input"
+                style="@style/instaFormEditTextInput"
+                app:errorTextAppearance="@style/InstaFormEditTextError"
+                app:hintEnabled="false">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/login_edittext_email"
+                style="@style/instaFormEditText"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_edittext_password_input"
+                style="@style/instaFormEditTextInput"
+                app:errorTextAppearance="@style/InstaFormEditTextError"
+                app:hintEnabled="false">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/login_edittext_password"
+                style="@style/instaFormEditText"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.leandro.instagram.login.presentation.LoadingButton
+                android:id="@+id/login_button_enter"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:text="@string/enter" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <View
+                    style="@style/FormContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@color/grayDark" />
+
+                <TextView
+                    style="@style/InstaTextViewBase"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:padding="8dp"
+                    android:text="@string/or"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_button_facebook"
+                style="@style/instaFormButton.Link"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/facebook_logo"
+                android:drawablePadding="8dp"
+                android:text="@string/enter_with_facebook"
+                android:textAllCaps="false" />
+
+            <View
+                android:id="@+id/dividor_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayDark" />
+
+            <TextView
+                android:id="@+id/login_textview_register"
+                style="@style/InstaTextViewBase"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="@string/does_not_have_account" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
