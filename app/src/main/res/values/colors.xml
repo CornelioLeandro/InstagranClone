@@ -17,6 +17,7 @@
     <color name="grayText">#999999</color>
     <color name="nav_bottom_background">#FFFFFF</color>
     <color name="nav_icon_black">#000000</color>
+    <color name="main_textview_perfil_drakgray">#535353</color>
 
     Erros
     <color name="red">#FF0000</color>
