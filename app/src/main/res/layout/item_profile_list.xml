@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/home_container_user_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_insta_profile_thin"
+            app:civ_border_color="@color/grayBorder"
+            app:civ_border_width="1dp"
+            app:civ_circle_background_color="@color/gray" />
+
+        <TextView
+            style="@style/InstaTextViewBase"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="9dp"
+            android:layout_weight="1"
+            android:text="@string/username" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_more" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/profile_image_grid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@color/red"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_container_user_profile"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:id="@+id/home_container_user_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_grid">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/instaImageViewPost"
+            android:src="@drawable/ic_insta_heart" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/instaImageViewPost"
+            android:src="@drawable/ic_insta_comment" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/instaImageViewPost"
+            android:src="@drawable/ic_insta_send" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/InstaTextViewBase"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/agree_terms_policy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_container_user_comment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
