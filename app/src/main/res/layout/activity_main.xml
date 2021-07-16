@@ -16,10 +16,19 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/main_toolbar"
                 android:layout_width="match_parent"
                 app:layout_scrollFlags="scroll"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/app_name"/>
+                app:title=" " >
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@drawable/instagram_logo_black"/>]
+
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,11 +41,11 @@
 
             <fragment
                 android:id="@+id/main_fragment"
-                android:name="com.leandro.instagram.main.profile.presentation.ProfileFragment"
+                android:name="com.leandro.instagram.main.home.presentation.HomeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/main_bottom_nav"
-                tools:layout="@layout/fragment_main_profile" />
+                tools:layout="@layout/fragment_main_home" />
 
         </LinearLayout>
 
