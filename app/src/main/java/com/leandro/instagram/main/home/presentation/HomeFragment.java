@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment {
         @NonNull
         @Override
         public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_profile_list,parent,false));
+            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_post_list,parent,false));
         }
 
         @Override

@@ -41,11 +41,11 @@
 
             <fragment
                 android:id="@+id/main_fragment"
-                android:name="com.leandro.instagram.main.home.presentation.HomeFragment"
+                android:name="com.leandro.instagram.main.camera.presentation.CameraFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/main_bottom_nav"
-                tools:layout="@layout/fragment_main_home" />
+                tools:layout="@layout/fragment_main_gallery" />
 
         </LinearLayout>
 
