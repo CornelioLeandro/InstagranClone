@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.leandro.instagram.R;
 
 public class HomeFragment extends Fragment {
-
-    public HomeFragment() {
+        public HomeFragment() {
     }
 
     @Override

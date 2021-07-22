@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:text="@string/photo_register_subtitle" />
 
-    <com.leandro.instagram.login.presentation.LoadingButton
+    <com.leandro.instagram.commom.view.LoadingButton
         android:id="@+id/register_button_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

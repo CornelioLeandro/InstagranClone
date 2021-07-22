@@ -1,4 +1,4 @@
-package com.leandro.instagram.login.presentation;
+package com.leandro.instagram.commom.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
