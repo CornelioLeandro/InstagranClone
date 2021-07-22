@@ -18,13 +18,17 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(getLayout());
+        ButterKnife.bind(this);
     }
 
     public Drawable findDrawable(@DrawableRes int drawableId){
        return Drawables.getDrawable(this,drawableId);
     }
+
+    public void showProgressBar(){}
+
+    public void hideProgressBar(){}
 
     protected abstract @LayoutRes
     int getLayout();
