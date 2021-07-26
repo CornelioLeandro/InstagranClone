@@ -1,6 +1,8 @@
 package com.leandro.instagram.login.presentation;
 
-public interface LoginView {
+import com.leandro.instagram.commom.view.View;
+
+public interface LoginView extends View {
 
     void onFailureForm(String emailError, String passwordError);
 
