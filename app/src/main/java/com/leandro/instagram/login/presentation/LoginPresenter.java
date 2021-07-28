@@ -3,6 +3,7 @@ package com.leandro.instagram.login.presentation;
 import android.os.Handler;
 
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.model.UserAuth;
 import com.leandro.instagram.commom.presenter.Presenter;
 import com.leandro.instagram.commom.util.Strings;
 import com.leandro.instagram.login.datasource.LoginDataSource;
@@ -31,7 +32,8 @@ class LoginPresenter implements Presenter {
     }
 
     @Override
-    public void onSucess() {
+    public void onSucess(UserAuth userAuth) {
+        view.onUserLogged();
 
     }
 

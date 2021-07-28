@@ -1,5 +1,6 @@
 package com.leandro.instagram.login.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,11 +13,14 @@ import com.leandro.instagram.commom.view.AbstractActivity;
 import com.leandro.instagram.commom.view.LoadingButton;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 import com.leandro.instagram.login.datasource.LoginLocalDataSource;
+import com.leandro.instagram.main.presentation.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+
+import static com.leandro.instagram.main.presentation.MainActivity.launch;
 
 public class LoginActivity extends AbstractActivity implements LoginView {
 
@@ -70,7 +74,7 @@ public class LoginActivity extends AbstractActivity implements LoginView {
 
     @Override
     public void onUserLogged() {
-        // TODO: 22/07/2021
+        launch(this);
     }
 
     @OnClick(R.id.login_button_enter)
