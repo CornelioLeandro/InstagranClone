@@ -2,14 +2,21 @@ package com.leandro.instagram.commom.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.leandro.instagram.R;
+import com.leandro.instagram.commom.util.Colors;
 import com.leandro.instagram.commom.util.Drawables;
 
 import butterknife.ButterKnife;
@@ -25,21 +32,43 @@ public abstract class AbstractActivity extends AppCompatActivity implements View
         onInject();
     }
 
-    public Drawable findDrawable(@DrawableRes int drawableId){
-       return Drawables.getDrawable(this,drawableId);
+    public Drawable findDrawable(@DrawableRes int drawableId) {
+        return Drawables.getDrawable(this, drawableId);
+    }
+
+
+    public int findColor(@ColorRes int colorId){
+        return Colors.getColor(this,colorId);
     }
 
     @Override
-    public Context getContext(){
+    public Context getContext() {
         return getBaseContext();
     }
-    @Override
-    public void showProgressBar(){}
 
     @Override
-    public void hideProgressBar(){}
+    public void showProgressBar() {
+    }
 
-    protected abstract @LayoutRes int getLayout();
+    @Override
+    public void hideProgressBar() {
+    }
+
+    @Override
+    public void setStatusBarDark() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(findColor(R.color.black));
+        }
+    }
+
+
+
+    protected abstract @LayoutRes
+    int getLayout();
 
     protected abstract void onInject();
+
+
 }

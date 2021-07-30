@@ -4,25 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register.presentation.RegisterActivity"
-    android:orientation="vertical"
-    tools:showIn="@layout/activity_register">
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
         android:scaleX=".5"
         android:scaleY=".5"
-        android:layout_marginBottom="16dp"
         android:src="@drawable/photo_icon" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_edittext_email_input"
         style="@style/instaFormEditTextInput"
         app:errorTextAppearance="@style/InstaFormEditTextError"
-        app:hintEnabled="false"
-        >
+        app:hintEnabled="false">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/register_edittext_email"
@@ -45,7 +42,7 @@
         android:background="@color/grayDark" />
 
     <TextView
-        android:id="@+id/login_textview_login"
+        android:id="@+id/register_textview_email_login"
         style="@style/InstaTextViewBase"
         android:layout_width="match_parent"
         android:layout_height="60dp"

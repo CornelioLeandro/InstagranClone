@@ -17,12 +17,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <fragment
+            <FrameLayout
                 android:id="@+id/register_fragment"
-                android:name="com.leandro.instagram.register.presentation.RegisterPhotoFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_register_photo" />
+                tools:layout="@layout/fragment_register_email" />
 
         </LinearLayout>
 

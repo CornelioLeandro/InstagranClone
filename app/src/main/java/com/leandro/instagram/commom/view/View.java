@@ -10,5 +10,7 @@ public interface View {
 
     void hideProgressBar();
 
+    void setStatusBarDark();
+
 
 }

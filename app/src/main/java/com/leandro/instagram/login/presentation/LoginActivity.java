@@ -14,6 +14,7 @@ import com.leandro.instagram.commom.view.LoadingButton;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 import com.leandro.instagram.login.datasource.LoginLocalDataSource;
 import com.leandro.instagram.main.presentation.MainActivity;
+import com.leandro.instagram.register.presentation.RegisterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ public class LoginActivity extends AbstractActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBarDark();
 
     }
 
@@ -80,6 +82,11 @@ public class LoginActivity extends AbstractActivity implements LoginView {
     @OnClick(R.id.login_button_enter)
     public void onButtonEnterClick() {
         presenter.login(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+    }
+
+    @OnClick(R.id.login_textview_register)
+    public void onTextViewRegisterClick(){
+        RegisterActivity.launch(this);
     }
 
     @OnTextChanged({R.id.login_edittext_email,R.id.login_edittext_password})
