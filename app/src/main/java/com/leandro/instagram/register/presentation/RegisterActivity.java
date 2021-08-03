@@ -1,6 +1,5 @@
 package com.leandro.instagram.register.presentation;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,7 +9,6 @@ import android.os.Bundle;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.main.presentation.MainActivity;
 
 public class RegisterActivity extends AbstractActivity implements RegisterView {
 
@@ -18,6 +16,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
     }
+
+    private RegisterPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
 
     @Override
     protected void onInject() {
-     RegisterEmailFragment frag = new RegisterEmailFragment();
+        presenter = new RegisterPresenter();
+        RegisterEmailFragment frag = RegisterEmailFragment.newInstance(presenter);
         FragmentManager manager = getSupportFragmentManager();
        FragmentTransaction transaction = manager.beginTransaction();
 
