@@ -5,23 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".register.presentation.RegisterActivity"
-    tools:showIn="@layout/activity_register">
+    tools:context=".register.presentation.RegisterActivity">
 
 
     <TextView
+        android:id="@+id/register_textview_welcome"
         style="@style/InstaTextViewBaseForm"
         android:layout_gravity="center"
         android:text="@string/welcome_to_instagram" />
 
     <com.leandro.instagram.commom.view.LoadingButton
-        android:id="@+id/register_button_next"
+        android:id="@+id/register_button_welcome_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="@string/next" />
 
     <TextView
-        android:id="@+id/login_textview_login"
+        android:id="@+id/register_textview_welcoem_login"
         style="@style/InstaTextViewBase"
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -8,7 +8,7 @@ import com.leandro.instagram.commom.presenter.Presenter;
 import com.leandro.instagram.commom.util.Strings;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 
-class LoginPresenter implements Presenter {
+class LoginPresenter implements Presenter<UserAuth> {
     private final LoginView view;
     private final LoginDataSource dataSource;
 

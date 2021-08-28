@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractActivity;
+import com.leandro.instagram.register.presentation.datasource.RegisterDataSource;
+import com.leandro.instagram.register.presentation.datasource.RegisterLocalDataSource;
 
 public class RegisterActivity extends AbstractActivity implements RegisterView {
 
@@ -29,7 +31,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
 
     @Override
     protected void onInject() {
-        presenter = new RegisterPresenter();
+        RegisterDataSource dataSource = new RegisterLocalDataSource();
+        presenter = new RegisterPresenter(dataSource);
         presenter.setRegisterView(this);
         showNextView(RegisterSteps.EMAIL);
     }
@@ -40,9 +43,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
         switch (steps) {
             case EMAIL:
                 break;
-            case NAME_PASSWORD:
-                frag = RegisterNamePasswordFragment.newInstance(presenter);
-                break;
+            case NAME_PASSWORD: frag = RegisterNamePasswordFragment.newInstance(presenter); break;
+            case WELCOME: frag = RegisterWelcomeFragment.newInstance(presenter); break;
         }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

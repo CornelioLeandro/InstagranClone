@@ -1,9 +1,15 @@
 package com.leandro.instagram.register.presentation;
 
-import com.leandro.instagram.R;
-import com.leandro.instagram.commom.util.Strings;
+import android.widget.TextView;
 
-public class RegisterPresenter {
+import com.leandro.instagram.R;
+import com.leandro.instagram.commom.model.UserAuth;
+import com.leandro.instagram.commom.presenter.Presenter;
+import com.leandro.instagram.commom.util.Strings;
+import com.leandro.instagram.register.presentation.datasource.RegisterDataSource;
+
+public class RegisterPresenter implements Presenter<UserAuth> {
+    private final RegisterDataSource dataSource;
     private RegisterView.EmailView emailView;
     private RegisterView.NamePasswordView namePasswordView;
     private RegisterView registerView;
@@ -11,6 +17,10 @@ public class RegisterPresenter {
     private String email;
     private String name;
     private String password;
+
+    public RegisterPresenter(RegisterDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
 
     public void setRegisterView(RegisterView registerView){
@@ -42,5 +52,31 @@ public class RegisterPresenter {
         this.name = name;
         this.password = password;
 
+        namePasswordView.showProgressBar();
+        dataSource.createUser(this.name,this.email,this.password,this);
     }
+
+    public void showPhotoView() {
+        registerView.showNextView(RegisterSteps.PHOTO);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void onSucess(UserAuth response) {
+        registerView.showNextView(RegisterSteps.WELCOME);
+    }
+
+    @Override
+    public void onError(String message) {
+        namePasswordView.onFailureCreateUser(message);
+    }
+
+    @Override
+    public void onComplete() {
+    namePasswordView.hideProgressBar();
+    }
+
 }
