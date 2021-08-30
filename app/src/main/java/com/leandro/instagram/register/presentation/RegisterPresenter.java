@@ -64,6 +64,10 @@ public class RegisterPresenter implements Presenter<UserAuth> {
         return name;
     }
 
+    public void jumpRegistration(){
+        registerView.onUserCreated();
+    }
+
     @Override
     public void onSucess(UserAuth response) {
         registerView.showNextView(RegisterSteps.WELCOME);

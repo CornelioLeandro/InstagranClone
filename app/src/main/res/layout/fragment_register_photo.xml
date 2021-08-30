@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".register.presentation.RegisterActivity"
-    tools:showIn="@layout/activity_register">
+    tools:context=".register.presentation.RegisterActivity">
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -27,14 +27,14 @@
         android:text="@string/photo_register_subtitle" />
 
     <com.leandro.instagram.commom.view.LoadingButton
-        android:id="@+id/register_button_next"
+        android:id="@+id/register_button_photo_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="@string/add_photo" />
 
     <androidx.appcompat.widget.AppCompatButton
         style="@style/instaFormButton.Link"
-        android:id="@+id/register_button_jump"
+        android:id="@+id/register_button_photo_jump"
         android:layout_gravity="center"
         android:layout_marginBottom="36dp"
         android:text="@string/jump"/>

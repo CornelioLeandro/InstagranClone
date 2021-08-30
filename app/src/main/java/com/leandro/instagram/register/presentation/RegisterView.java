@@ -8,7 +8,9 @@ public interface RegisterView {
 
     void showNextView(RegisterSteps steps);
 
-    interface EmailView{
+    void onUserCreated();
+
+    interface EmailView {
 
         Context getContext();
 
@@ -16,7 +18,7 @@ public interface RegisterView {
 
     }
 
-    interface NamePasswordView  extends View {
+    interface NamePasswordView extends View {
 
         Context getContext();
 
@@ -25,10 +27,13 @@ public interface RegisterView {
         void onFailureCreateUser(String message);
     }
 
-    interface WelcomeView{
+    interface WelcomeView {
 
         Context getContext();
 
         void onFailureForm(String emailError);
+    }
+
+    interface PhotoView {
     }
 }
