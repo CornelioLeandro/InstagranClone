@@ -1,5 +1,6 @@
 package com.leandro.instagram.register.presentation;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -8,21 +9,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.component.MediaHelper;
 import com.leandro.instagram.commom.view.AbstractActivity;
 import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.register.presentation.datasource.RegisterDataSource;
 import com.leandro.instagram.register.presentation.datasource.RegisterLocalDataSource;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class RegisterActivity extends AbstractActivity implements RegisterView {
     @BindView(R.id.register_scrollview)
     ScrollView scrollView;
+
+    @BindView(R.id.register_root_container)
+    FrameLayout rootContainer;
+
+    @BindView(R.id.register_crop_image_view)
+    CropImageView cropImageView;
+
+    @BindView(R.id.register_button_crop)
+    Button buttoncrop;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
@@ -37,7 +53,6 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
         setStatusBarDark();
     }
 
-
     @Override
     protected void onInject() {
         RegisterDataSource dataSource = new RegisterLocalDataSource();
@@ -50,25 +65,23 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     public void showNextView(RegisterSteps steps) {
         Fragment frag = null;
 
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
         switch (steps) {
             case EMAIL:
-                layoutParams.gravity = Gravity.BOTTOM;
-                frag = RegisterEmailFragment.newInstance(presenter); break;
+                frag = RegisterEmailFragment.newInstance(presenter);
+                break;
             case NAME_PASSWORD:
-                layoutParams.gravity = Gravity.BOTTOM;
                 frag = RegisterNamePasswordFragment.newInstance(presenter);
                 break;
             case WELCOME:
-                layoutParams.gravity = Gravity.BOTTOM;
                 frag = RegisterWelcomeFragment.newInstance(presenter);
                 break;
             case PHOTO:
-                layoutParams.gravity = Gravity.TOP;
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) scrollView.getLayoutParams();
+                layoutParams.gravity = Gravity.CENTER;
+                scrollView.setLayoutParams(layoutParams);
                 frag = RegisterPhotoFragment.newInstance(presenter);
                 break;
         }
-        scrollView.setLayoutParams(layoutParams);
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -82,10 +95,38 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        cropViewEnabled(true);
+        MediaHelper mediaHelper = MediaHelper.getInstace(this);
+        mediaHelper.onActivityResult(requestCode, requestCode, data);
+    }
+
+    private void cropViewEnabled(boolean enabled) {
+        scrollView.setVisibility(enabled ? View.GONE : View.VISIBLE);
+        buttoncrop.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        rootContainer.setBackgroundColor(enabled ? findColor(R.color.black): findColor(R.color.white));
+    }
+
+    @Override
     public void onUserCreated() {
         MainActivity.launch(this);
     }
 
+    @Override
+    public void showCamera() {
+
+    }
+
+    @Override
+    public void showGallery() {
+        MediaHelper.getInstace(this)
+                .chooserGallery();
+    }
+
+    @OnClick(R.id.register_button_crop)
+    public void onButtonCropClick(){
+
+    }
     @Override
     protected int getLayout() {
         return R.layout.activity_register;

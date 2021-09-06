@@ -1,4 +1,4 @@
-package com.leandro.instagram.commom.view;
+package com.leandro.instagram.commom.component;
 
 import android.content.Context;
 import android.content.res.TypedArray;

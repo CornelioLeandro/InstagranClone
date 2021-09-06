@@ -8,11 +8,14 @@
     tools:context=".register.presentation.RegisterActivity">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/register_camera_icon"
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginBottom="24dp"
+        app:civ_border_width="0dp"
+        app:civ_border_color="@color/grayBorder"
         android:src="@drawable/photo_icon" />
 
     <TextView
@@ -26,7 +29,7 @@
         android:layout_gravity="center"
         android:text="@string/photo_register_subtitle" />
 
-    <com.leandro.instagram.commom.view.LoadingButton
+    <com.leandro.instagram.commom.component.LoadingButton
         android:id="@+id/register_button_photo_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

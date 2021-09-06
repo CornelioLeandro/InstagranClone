@@ -1,23 +1,17 @@
 package com.leandro.instagram.login.presentation;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.commom.view.LoadingButton;
+import com.leandro.instagram.commom.component.LoadingButton;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 import com.leandro.instagram.login.datasource.LoginLocalDataSource;
-import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.register.presentation.RegisterActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 

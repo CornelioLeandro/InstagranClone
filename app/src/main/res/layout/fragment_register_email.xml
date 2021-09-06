@@ -29,7 +29,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.leandro.instagram.commom.view.LoadingButton
+    <com.leandro.instagram.commom.component.LoadingButton
         android:id="@+id/register_button_enter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

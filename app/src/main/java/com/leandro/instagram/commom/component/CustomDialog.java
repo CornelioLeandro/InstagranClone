@@ -1,8 +1,7 @@
-package com.leandro.instagram.commom.view;
+package com.leandro.instagram.commom.component;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 
 import com.leandro.instagram.R;
 

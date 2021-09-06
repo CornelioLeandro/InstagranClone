@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:text="@string/welcome_to_instagram" />
 
-    <com.leandro.instagram.commom.view.LoadingButton
+    <com.leandro.instagram.commom.component.LoadingButton
         android:id="@+id/register_button_welcome_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

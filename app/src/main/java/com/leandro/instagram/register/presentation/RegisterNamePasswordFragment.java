@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractFragment;
-import com.leandro.instagram.commom.view.LoadingButton;
+import com.leandro.instagram.commom.component.LoadingButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;

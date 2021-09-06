@@ -2,9 +2,7 @@ package com.leandro.instagram.register.presentation;
 
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractFragment;
-import com.leandro.instagram.commom.view.LoadingButton;
+import com.leandro.instagram.commom.component.LoadingButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,10 +34,6 @@ public class RegisterWelcomeFragment extends AbstractFragment<RegisterPresenter>
         return fragment;
     }
 
-
-    @Override
-    public void onFailureForm(String emailError) {
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

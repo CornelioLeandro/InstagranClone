@@ -1,5 +1,6 @@
 package com.leandro.instagram.register.presentation;
 
+import android.net.Uri;
 import android.widget.TextView;
 
 import com.leandro.instagram.R;
@@ -13,20 +14,21 @@ public class RegisterPresenter implements Presenter<UserAuth> {
     private RegisterView.EmailView emailView;
     private RegisterView.NamePasswordView namePasswordView;
     private RegisterView registerView;
+    private RegisterView.PhotoView photoview;
+    private Uri uri;
 
     private String email;
     private String name;
     private String password;
 
+
     public RegisterPresenter(RegisterDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-
     public void setRegisterView(RegisterView registerView){
         this.registerView = registerView;
     }
-
 
     public void setEmailView(RegisterView.EmailView emailView) {
         this.emailView = emailView;
@@ -34,6 +36,10 @@ public class RegisterPresenter implements Presenter<UserAuth> {
 
    public void setNamePasswordView(RegisterView.NamePasswordView namePasswordView){
     this.namePasswordView = namePasswordView;
+    }
+
+    public  void setPhotoView(RegisterView.PhotoView photoView){
+        this.photoview = photoView;
     }
 
     public void setEmail(String email){
@@ -50,16 +56,27 @@ public class RegisterPresenter implements Presenter<UserAuth> {
         return;
         }
         this.name = name;
-        this.password = password;
 
         namePasswordView.showProgressBar();
-        dataSource.createUser(this.name,this.email,this.password,this);
+        dataSource.createUser(name,email,password,this);
     }
 
     public void showPhotoView() {
         registerView.showNextView(RegisterSteps.PHOTO);
     }
 
+    public void setUri(Uri uri){
+        this.uri = uri;
+        photoview.onImageCropperd(uri);
+    }
+
+    public void showCamera(){
+        registerView.showCamera();
+    }
+
+    public void showGallery(){
+        registerView.showGallery();
+    }
     public String getName() {
         return name;
     }
