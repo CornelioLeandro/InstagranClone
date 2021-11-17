@@ -5,10 +5,13 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.model.Database;
+import com.leandro.instagram.commom.model.UserAuth;
 import com.leandro.instagram.commom.view.AbstractActivity;
 import com.leandro.instagram.commom.component.LoadingButton;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 import com.leandro.instagram.login.datasource.LoginLocalDataSource;
+import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.register.presentation.RegisterActivity;
 
 import butterknife.BindView;
@@ -36,6 +39,11 @@ public class LoginActivity extends AbstractActivity implements LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarDark();
+
+        UserAuth user = Database.getInstance().getUser();
+        if (user != null){
+            onUserLogged();
+        }
 
     }
 
@@ -70,7 +78,8 @@ public class LoginActivity extends AbstractActivity implements LoginView {
 
     @Override
     public void onUserLogged() {
-        launch(this);
+        launch(this, MainActivity.LOGIN_ACTIVITY);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @OnClick(R.id.login_button_enter)

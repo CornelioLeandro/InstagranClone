@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -27,7 +28,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterActivity extends AbstractActivity implements RegisterView {
+public class RegisterActivity extends AbstractActivity implements RegisterView, MediaHelper.OnImageCroppedListener {
     @BindView(R.id.register_scrollview)
     ScrollView scrollView;
 
@@ -40,6 +41,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     @BindView(R.id.register_button_crop)
     Button buttoncrop;
 
+    private MediaHelper mediaHelper;
+
     public static void launch(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
@@ -48,9 +51,17 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     private RegisterPresenter presenter;
 
     @Override
+    public void onImagePicked(Uri uri) {
+        cropImageView.setImageUriAsync(uri);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarDark();
+        mediaHelper = MediaHelper.getInstace(this)
+                .cropView(cropImageView)
+                .listener(this);
     }
 
     @Override
@@ -96,12 +107,19 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         cropViewEnabled(true);
         MediaHelper mediaHelper = MediaHelper.getInstace(this);
-        mediaHelper.onActivityResult(requestCode, requestCode, data);
+        mediaHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onImageCropped(Uri uri) {
+        presenter.setUri(uri);
     }
 
     private void cropViewEnabled(boolean enabled) {
+        cropImageView.setVisibility(enabled ? View.VISIBLE : View.GONE);
         scrollView.setVisibility(enabled ? View.GONE : View.VISIBLE);
         buttoncrop.setVisibility(enabled ? View.VISIBLE : View.GONE);
         rootContainer.setBackgroundColor(enabled ? findColor(R.color.black): findColor(R.color.white));
@@ -109,23 +127,24 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
 
     @Override
     public void onUserCreated() {
-        MainActivity.launch(this);
+        MainActivity.launch(this,MainActivity.REGISTER_ACTIVITY);
     }
 
     @Override
     public void showCamera() {
-
+        mediaHelper.chooserCamera();
     }
 
     @Override
     public void showGallery() {
         MediaHelper.getInstace(this)
-                .chooserGallery();
+        .chooserGallery();
     }
 
     @OnClick(R.id.register_button_crop)
     public void onButtonCropClick(){
-
+        cropViewEnabled(false);
+        MediaHelper.getInstace(this).cropImage(cropImageView);
     }
     @Override
     protected int getLayout() {

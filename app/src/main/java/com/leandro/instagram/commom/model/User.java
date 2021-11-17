@@ -1,10 +1,30 @@
 package com.leandro.instagram.commom.model;
 
+import android.net.Uri;
+
 public class User {
 
+    private String uuid;
     private String name;
     private String email;
+    private Uri uri;
 
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 
     public String getName() {
         return name;

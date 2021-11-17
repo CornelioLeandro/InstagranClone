@@ -16,8 +16,28 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.view.AbstractFragment;
+import com.leandro.instagram.main.home.presentation.HomeFragment;
+import com.leandro.instagram.main.presentation.MainView;
 
-public class ProfileFragment extends Fragment {
+import butterknife.BindView;
+
+public class ProfileFragment extends AbstractFragment<ProfilePresenter> {
+
+    private MainView mainView;
+    @BindView(R.id.profile_recycler)
+    RecyclerView recyclerView;
+
+    public static ProfileFragment newInstance(MainView mainView) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        profileFragment.setMainView(mainView);
+        return profileFragment;
+    }
+
+    private void setMainView(MainView mainView) {
+        this.mainView = mainView;
+    }
+
 
     public ProfileFragment() {
     }
@@ -31,14 +51,16 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_profile, container, false);
+       View view = super.onCreateView(inflater,container,savedInstanceState);
 
-        RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(new PostAdapter());
-
-
         return view;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_main_profile;
     }
 
     @Override
@@ -63,7 +85,6 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
             holder.bind(images[position]);
-
         }
 
         @Override

@@ -29,7 +29,7 @@ public interface RegisterView {
 
     }
 
-    interface PhotoView {
+    interface PhotoView extends View {
         void onImageCropperd(Uri uri);
     }
 }

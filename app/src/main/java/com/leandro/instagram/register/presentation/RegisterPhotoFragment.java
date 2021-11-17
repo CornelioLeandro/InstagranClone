@@ -68,8 +68,11 @@ public class RegisterPhotoFragment extends AbstractFragment<RegisterPresenter> i
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button_jump.setEnabled(true);
         button_next.setEnabled(true);
+    }
+
+    public void showProgressBar(){
+        button_next.showProgress(true);
     }
 
     @Override
@@ -82,7 +85,6 @@ public class RegisterPhotoFragment extends AbstractFragment<RegisterPresenter> i
                 Log.e("Teste", e.getMessage(), e);
             }
         }
-
     }
 
     @Override

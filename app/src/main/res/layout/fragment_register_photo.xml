@@ -40,6 +40,6 @@
         android:id="@+id/register_button_photo_jump"
         android:layout_gravity="center"
         android:layout_marginBottom="36dp"
-        android:text="@string/jump"/>
+        android:text="@string/save"/>
 
 </LinearLayout>

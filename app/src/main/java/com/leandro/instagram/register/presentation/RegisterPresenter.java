@@ -26,7 +26,7 @@ public class RegisterPresenter implements Presenter<UserAuth> {
         this.dataSource = dataSource;
     }
 
-    public void setRegisterView(RegisterView registerView){
+    public void setRegisterView(RegisterView registerView) {
         this.registerView = registerView;
     }
 
@@ -34,54 +34,61 @@ public class RegisterPresenter implements Presenter<UserAuth> {
         this.emailView = emailView;
     }
 
-   public void setNamePasswordView(RegisterView.NamePasswordView namePasswordView){
-    this.namePasswordView = namePasswordView;
+    public void setNamePasswordView(RegisterView.NamePasswordView namePasswordView) {
+        this.namePasswordView = namePasswordView;
     }
 
-    public  void setPhotoView(RegisterView.PhotoView photoView){
+    public void setPhotoView(RegisterView.PhotoView photoView) {
         this.photoview = photoView;
     }
 
-    public void setEmail(String email){
-        if(!Strings.emailValid(email)) {
+    public void setEmail(String email) {
+        if (!Strings.emailValid(email)) {
             emailView.onFailureForm(emailView.getContext().getString(R.string.invalid_email));
             return;
         }
         this.email = email;
         registerView.showNextView(RegisterSteps.NAME_PASSWORD);
     }
-    public void setNameAndPasswordView(String name, String password,String confirmPassword){
-        if (!password.equals(confirmPassword)){
-        namePasswordView.onFailureForm(null,namePasswordView.getContext().getString(R.string.password_not_equal));
-        return;
+
+    public void setNameAndPasswordView(String name, String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            namePasswordView.onFailureForm(null, namePasswordView.getContext().getString(R.string.password_not_equal));
+            return;
         }
         this.name = name;
 
         namePasswordView.showProgressBar();
-        dataSource.createUser(name,email,password,this);
+        dataSource.createUser(name, email, password, this);
     }
 
     public void showPhotoView() {
         registerView.showNextView(RegisterSteps.PHOTO);
     }
 
-    public void setUri(Uri uri){
+    public void setUri(Uri uri) {
         this.uri = uri;
-        photoview.onImageCropperd(uri);
+        if (photoview != null) {
+            photoview.onImageCropperd(uri);
+            photoview.showProgressBar();
+
+            dataSource.addPhoto(uri, new UpdatePhotoCallback());
+        }
     }
 
-    public void showCamera(){
+    public void showCamera() {
         registerView.showCamera();
     }
 
-    public void showGallery(){
+    public void showGallery() {
         registerView.showGallery();
     }
+
     public String getName() {
         return name;
     }
 
-    public void jumpRegistration(){
+    public void jumpRegistration() {
         registerView.onUserCreated();
     }
 
@@ -97,7 +104,25 @@ public class RegisterPresenter implements Presenter<UserAuth> {
 
     @Override
     public void onComplete() {
-    namePasswordView.hideProgressBar();
+        namePasswordView.hideProgressBar();
+    }
+
+    private class  UpdatePhotoCallback implements Presenter<Boolean> {
+
+        @Override
+        public void onSucess(Boolean response) {
+        registerView.onUserCreated();
+        }
+
+        @Override
+        public void onError(String message) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
     }
 
 }

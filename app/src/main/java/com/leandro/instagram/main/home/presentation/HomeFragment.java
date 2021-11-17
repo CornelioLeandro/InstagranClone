@@ -15,9 +15,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.leandro.instagram.R;
+import com.leandro.instagram.main.presentation.MainActivity;
+import com.leandro.instagram.main.presentation.MainView;
 
 public class HomeFragment extends Fragment {
-        public HomeFragment() {
+
+    private MainView mainView;
+
+    public static HomeFragment newInstance(MainView mainView) {
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setMainView(mainView);
+        return homeFragment;
+    }
+
+    private void setMainView(MainView mainView) {
+        this.mainView = mainView;
+    }
+
+    public HomeFragment() {
     }
 
     @Override
@@ -41,21 +56,22 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_profile,menu);
+        inflater.inflate(R.menu.menu_profile, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     private class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         private int[] images = new int[]{
-                R.drawable.ic_insta_add,R.drawable.ic_insta_add,R.drawable.ic_insta_add,
-                R.drawable.ic_insta_add,R.drawable.ic_insta_add,R.drawable.ic_insta_add,
-                R.drawable.ic_insta_add,R.drawable.ic_insta_add,R.drawable.ic_insta_add,
-                R.drawable.ic_insta_add,R.drawable.ic_insta_add,R.drawable.ic_insta_add,
+                R.drawable.ic_insta_add, R.drawable.ic_insta_add, R.drawable.ic_insta_add,
+                R.drawable.ic_insta_add, R.drawable.ic_insta_add, R.drawable.ic_insta_add,
+                R.drawable.ic_insta_add, R.drawable.ic_insta_add, R.drawable.ic_insta_add,
+                R.drawable.ic_insta_add, R.drawable.ic_insta_add, R.drawable.ic_insta_add,
         };
+
         @NonNull
         @Override
         public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_post_list,parent,false));
+            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_post_list, parent, false));
         }
 
         @Override
@@ -77,9 +93,9 @@ public class HomeFragment extends Fragment {
             super(itemView);
             imagePost = itemView.findViewById(R.id.profile_image_grid);
         }
-
         public void bind(int image) {
             this.imagePost.setImageResource(image);
         }
     }
 }
+
