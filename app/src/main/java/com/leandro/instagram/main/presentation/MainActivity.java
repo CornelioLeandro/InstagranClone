@@ -79,10 +79,10 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
     @Override
     protected void onInject() {
         ProfileDataSource profileDataSource= new ProfileLocalDataSource();
-        ProfilePresenter profilePresenter = new ProfilePresenter(profileDataSource);
+         profilePresenter = new ProfilePresenter(profileDataSource);
 
         HomeDataSource homeDataSource = new HomeLocalDataSource();
-        HomePresenter homePresenter = new HomePresenter(homeDataSource);
+        homePresenter = new HomePresenter(homeDataSource);
 
         homeFragment = HomeFragment.newInstance(this, homePresenter);
         profileFragment = ProfileFragment.newInstance(this, profilePresenter);
@@ -151,6 +151,7 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
         switch (item.getItemId()) {
             case R.id.menu_bottom_home:
                 fm.beginTransaction().hide(active).show(homeFragment).commit();
+                homePresenter.findFeed();
                 active = homeFragment;
                 scrollToolbarEnabled(false);
                 return true;
@@ -160,6 +161,7 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
                 return true;
             case R.id.menu_bottom_profile:
                 fm.beginTransaction().hide(active).show(profileFragment).commit();
+                profilePresenter.findUser();
                 active = profileFragment;
                 scrollToolbarEnabled(true);
                 return true;
