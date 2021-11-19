@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.leandro.instagram.commom.util.Colors;
 import com.leandro.instagram.commom.util.Drawables;
+import com.leandro.instagram.main.home.presentation.HomePresenter;
+import com.leandro.instagram.main.profile.presentation.ProfilePresenter;
 
 import butterknife.ButterKnife;
 
@@ -53,7 +55,6 @@ public abstract  class AbstractFragment<P> extends Fragment implements com.leand
         return Drawables.getDrawable(getContext(), drawableId);
     }
 
-
     public int findColor(@ColorRes int colorId){
         return Colors.getColor(getContext(),colorId);
     }
@@ -64,6 +65,5 @@ public abstract  class AbstractFragment<P> extends Fragment implements com.leand
 
     protected abstract @LayoutRes
     int getLayout();
-
 
 }

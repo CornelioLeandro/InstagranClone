@@ -3,6 +3,8 @@ package com.leandro.instagram.commom.model;
 import android.net.Uri;
 import android.os.Handler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,29 +14,36 @@ public class Database {
     private static Set<User> users;
     private static Database INSTANCE;
     private static Set<Uri> storages;
+    private static HashMap<String, HashSet<Post>> posts;
+    private static HashMap<String, HashSet<Feed>> feed;
 
     private OnSuccessListener onSuccessListener;
     private OnFailureListener onFailureListener;
     private OncCompleteListener onCompleteListener;
-    private UserAuth userAuth;
+    private static UserAuth userAuth;
 
     static {
         usersAuth = new HashSet<>();
         users = new HashSet<>();
         storages = new HashSet<>();
+        posts = new HashMap<>();
+        feed = new HashMap<>();
+
+        init();
     }
 
     public static Database getInstance() {
-        if (INSTANCE == null)
-            INSTANCE = new Database();
-        INSTANCE.init();
-        return INSTANCE;
+        return new Database();
+        // if (INSTANCE == null)
+        //    INSTANCE = new Database();
+        //  INSTANCE.init();
+        //return INSTANCE;
     }
 
-    private void init() {
+    private static void init() {
         String email = "user1@gmail.com";
         String password = "123";
-        String name = "user";
+        String name = "Leandro Silva";
 
         UserAuth userAuth = new UserAuth();
         userAuth.setEmail(email);
@@ -47,7 +56,7 @@ public class Database {
         user.setUuid(userAuth.getUUID());
 
         users.add(user);
-        this.userAuth = userAuth;
+        Database.userAuth = userAuth;
     }
 
     public <T> Database addOnSuccessListener(OnSuccessListener<T> listener) {
@@ -65,11 +74,67 @@ public class Database {
         return this;
     }
 
-    public Database addPhoto(String uuid,Uri uri){
+    //select * from posts p inner join users u on p.user_id = u.id where u.uuid = ?
+    public Database findPosts(String uuid) {
+        timeOut(() -> {
+            HashMap<String, HashSet<Post>> posts = Database.posts;
+            HashSet<Post> res = posts.get(uuid);
+
+            if (res == null)
+                res = new HashSet<>();
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(new ArrayList<>(res));
+            if (onCompleteListener != null)
+                onCompleteListener.onComplete();
+        });
+        return this;
+    }
+
+
+    public Database findFeed(String uuid) {
         timeOut(() ->{
+            HashMap<String, HashSet<Feed>> feed = Database.feed;
+            HashSet<Feed> res = feed.get(uuid);
+
+            if (res == null)
+                res = new HashSet<>();
+
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(new ArrayList<>(res));
+
+            if (onCompleteListener != null)
+                onCompleteListener.onComplete();
+        });
+        return this;
+    }
+
+    // select * from users where uuid = ?
+    public Database findUser(String uuid) {
+        timeOut(() -> {
             Set<User> users = Database.users;
-            for (User user: users){
-                if (user.getUuid().equals(uuid)){
+            User res = null;
+            for (User user : users) {
+                if (user.getUuid().equals(uuid)) {
+                    res = user;
+                    break;
+                }
+            }
+            if (onSuccessListener != null && res != null) {
+                onSuccessListener.onSuccess(res);
+            } else if (onFailureListener != null) {
+                onFailureListener.onFailure(new IllegalArgumentException("Usuario nao encontrato"));
+            }
+            if (onCompleteListener != null)
+                onCompleteListener.onComplete();
+        });
+        return this;
+    }
+
+    public Database addPhoto(String uuid, Uri uri) {
+        timeOut(() -> {
+            Set<User> users = Database.users;
+            for (User user : users) {
+                if (user.getUuid().equals(uuid)) {
                     user.setUri(uri);
                 }
             }
@@ -79,8 +144,8 @@ public class Database {
         return this;
     }
 
-    public Database createUser(String name, String email, String password){
-        timeOut(() ->{
+    public Database createUser(String name, String email, String password) {
+        timeOut(() -> {
             UserAuth userAuth = new UserAuth();
             userAuth.setEmail(email);
             userAuth.setPassword(password);
@@ -94,18 +159,18 @@ public class Database {
 
             boolean added = users.add(user);
             if (added) {
-                this.userAuth = userAuth;
+                Database.userAuth = userAuth;
                 if (onSuccessListener != null)
-                onSuccessListener.onSuccess(userAuth);
-            }else{
-                this.userAuth = null;
+                    onSuccessListener.onSuccess(userAuth);
+            } else {
+                Database.userAuth = null;
                 if (onSuccessListener != null)
-                onFailureListener.onFailure(new IllegalArgumentException("Usuario já existe"));
+                    onFailureListener.onFailure(new IllegalArgumentException("Usuario já existe"));
             }
             if (onSuccessListener != null)
-            onCompleteListener.onComplete();
+                onCompleteListener.onComplete();
         });
-        return  this;
+        return this;
     }
 
     public Database login(String email, String password) {
@@ -115,10 +180,10 @@ public class Database {
             userAuth.setPassword(password);
 
             if (usersAuth.contains(userAuth)) {
-                this.userAuth = userAuth;
+                Database.userAuth = userAuth;
                 onSuccessListener.onSuccess(userAuth);
             } else {
-                this.usersAuth = null;
+                Database.usersAuth = null;
                 onFailureListener.onFailure(new IllegalArgumentException("Usuario nao encontrado"));
             }
             onCompleteListener.onComplete();
@@ -126,7 +191,7 @@ public class Database {
         return this;
     }
 
-    public UserAuth getUser(){
+    public UserAuth getUser() {
         return userAuth;
     }
 

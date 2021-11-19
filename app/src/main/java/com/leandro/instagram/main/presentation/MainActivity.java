@@ -20,10 +20,17 @@ import android.view.View;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.model.Database;
 import com.leandro.instagram.commom.view.AbstractActivity;
 import com.leandro.instagram.main.camera.presentation.CameraFragment;
+import com.leandro.instagram.main.home.datasource.HomeDataSource;
+import com.leandro.instagram.main.home.datasource.HomeLocalDataSource;
 import com.leandro.instagram.main.home.presentation.HomeFragment;
+import com.leandro.instagram.main.home.presentation.HomePresenter;
+import com.leandro.instagram.main.profile.datasource.ProfileDataSource;
+import com.leandro.instagram.main.profile.datasource.ProfileLocalDataSource;
 import com.leandro.instagram.main.profile.presentation.ProfileFragment;
+import com.leandro.instagram.main.profile.presentation.ProfilePresenter;
 import com.leandro.instagram.main.search.presetation.SearchFragment;
 
 public class MainActivity extends AbstractActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainView {
@@ -32,11 +39,15 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
     public static final int REGISTER_ACTIVITY = 1;
     public static final String ACT_SOURCE = "act_source";
 
+    private ProfilePresenter profilePresenter;
+    private HomePresenter homePresenter;
+
     Fragment homeFragment;
     Fragment profileFragment;
     Fragment cameraFragment;
     Fragment searchFragment;
     Fragment active;
+
 
     public static void launch(Context context, int source) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -67,8 +78,14 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
 
     @Override
     protected void onInject() {
-        homeFragment = HomeFragment.newInstance(this);
-        profileFragment = ProfileFragment.newInstance(this);
+        ProfileDataSource profileDataSource= new ProfileLocalDataSource();
+        ProfilePresenter profilePresenter = new ProfilePresenter(profileDataSource);
+
+        HomeDataSource homeDataSource = new HomeLocalDataSource();
+        HomePresenter homePresenter = new HomePresenter(homeDataSource);
+
+        homeFragment = HomeFragment.newInstance(this, homePresenter);
+        profileFragment = ProfileFragment.newInstance(this, profilePresenter);
         cameraFragment = new CameraFragment();
         searchFragment = new SearchFragment();
 
@@ -80,6 +97,16 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
         fm.beginTransaction().add(R.id.main_fragment, searchFragment).hide(searchFragment).commit();
         fm.beginTransaction().add(R.id.main_fragment, homeFragment).hide(homeFragment).commit();
 
+    }
+
+    @Override
+    public void showProgressBar() {
+        findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        findViewById(R.id.main_progress).setVisibility(View.GONE);
     }
 
     @Override
@@ -95,14 +122,9 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
                 getSupportFragmentManager().beginTransaction().hide(active).show(profileFragment).commit();
                 active = profileFragment;
                 scrollToolbarEnabled(true);
+                profilePresenter.findUser();
             }
         }
-    }
-
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-
     }
 
     @Override
