@@ -2,27 +2,23 @@ package com.leandro.instagram.main.presentation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.leandro.instagram.R;
-import com.leandro.instagram.commom.model.Database;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.main.camera.presentation.CameraFragment;
+import com.leandro.instagram.main.camera.presentation.AddActivity;
 import com.leandro.instagram.main.home.datasource.HomeDataSource;
 import com.leandro.instagram.main.home.datasource.HomeLocalDataSource;
 import com.leandro.instagram.main.home.presentation.HomeFragment;
@@ -33,7 +29,7 @@ import com.leandro.instagram.main.profile.presentation.ProfileFragment;
 import com.leandro.instagram.main.profile.presentation.ProfilePresenter;
 import com.leandro.instagram.main.search.presetation.SearchFragment;
 
-public class MainActivity extends AbstractActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainView {
+public class Context extends AbstractActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainView {
 
     public static final int LOGIN_ACTIVITY = 0;
     public static final int REGISTER_ACTIVITY = 1;
@@ -44,13 +40,13 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
 
     Fragment homeFragment;
     Fragment profileFragment;
-    Fragment cameraFragment;
+  //  Fragment cameraFragment;
     Fragment searchFragment;
     Fragment active;
 
 
-    public static void launch(Context context, int source) {
-        Intent intent = new Intent(context, MainActivity.class);
+    public static void launch(android.content.Context context, int source) {
+        Intent intent = new Intent(context, Context.class);
         intent.putExtra(ACT_SOURCE, source);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -86,14 +82,14 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
 
         homeFragment = HomeFragment.newInstance(this, homePresenter);
         profileFragment = ProfileFragment.newInstance(this, profilePresenter);
-        cameraFragment = new CameraFragment();
+    //    cameraFragment = new CameraFragment();
         searchFragment = new SearchFragment();
 
         active = homeFragment;
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.main_fragment, profileFragment).hide(profileFragment).commit();
-        fm.beginTransaction().add(R.id.main_fragment, cameraFragment).hide(cameraFragment).commit();
+    //    fm.beginTransaction().add(R.id.main_fragment, cameraFragment).hide(cameraFragment).commit();
         fm.beginTransaction().add(R.id.main_fragment, searchFragment).hide(searchFragment).commit();
         fm.beginTransaction().add(R.id.main_fragment, homeFragment).hide(homeFragment).commit();
 
@@ -166,8 +162,9 @@ public class MainActivity extends AbstractActivity implements BottomNavigationVi
                 scrollToolbarEnabled(true);
                 return true;
             case R.id.menu_bottom_add:
-                fm.beginTransaction().hide(active).show(cameraFragment).commit();
-                active = cameraFragment;
+//                fm.beginTransaction().hide(active).show(cameraFragment).commit();
+//                active = cameraFragment;
+                AddActivity.launch(this);
                 return true;
         }
         return false;

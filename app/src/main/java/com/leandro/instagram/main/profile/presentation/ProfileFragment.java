@@ -1,7 +1,6 @@
 package com.leandro.instagram.main.profile.presentation;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,15 +15,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.model.Post;
 import com.leandro.instagram.commom.view.AbstractFragment;
-import com.leandro.instagram.main.home.presentation.HomeFragment;
-import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.main.presentation.MainView;
 
 import java.io.IOException;

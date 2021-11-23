@@ -5,22 +5,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.component.MediaHelper;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.main.presentation.MainActivity;
+import com.leandro.instagram.main.presentation.Context;
 import com.leandro.instagram.register.presentation.datasource.RegisterDataSource;
 import com.leandro.instagram.register.presentation.datasource.RegisterLocalDataSource;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -43,7 +40,7 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
 
     private MediaHelper mediaHelper;
 
-    public static void launch(Context context) {
+    public static void launch(android.content.Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
     }
@@ -127,7 +124,7 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
 
     @Override
     public void onUserCreated() {
-        MainActivity.launch(this,MainActivity.REGISTER_ACTIVITY);
+        Context.launch(this, Context.REGISTER_ACTIVITY);
     }
 
     @Override
