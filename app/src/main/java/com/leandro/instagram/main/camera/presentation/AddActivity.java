@@ -5,6 +5,7 @@ import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,6 +49,15 @@ public class AddActivity extends AbstractActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(findColor(R.color.blueEnable));
         }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+            @Override
+            public void onTabSelected(@NonNull TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                viewPager.setCurrentItem(tab.getPosition());
+                Log.d("Teste","" + tab.getPosition());
+            }
+        });
     }
 
     @Override
@@ -62,13 +72,15 @@ public class AddActivity extends AbstractActivity {
         adapter.add(cameraFragment);
 
         adapter.notifyDataSetChanged();
+        tabLayout.setupWithViewPager(viewPager);
+
         TabLayout.Tab tabLeft = tabLayout.getTabAt(0);
         if (tabLeft != null)
             tabLeft.setText(getString(R.string.gallery));
 
         TabLayout.Tab tabRight = tabLayout.getTabAt(1);
         if (tabRight != null)
-            tabLeft.setText(getString(R.string.photo));
+            tabRight.setText(getString(R.string.photo));
 
         viewPager.setCurrentItem(adapter.getCount() -1);
     }
