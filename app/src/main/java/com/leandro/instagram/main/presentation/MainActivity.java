@@ -29,7 +29,7 @@ import com.leandro.instagram.main.profile.presentation.ProfileFragment;
 import com.leandro.instagram.main.profile.presentation.ProfilePresenter;
 import com.leandro.instagram.main.search.presetation.SearchFragment;
 
-public class Context extends AbstractActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainView {
+public class MainActivity extends AbstractActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainView {
 
     public static final int LOGIN_ACTIVITY = 0;
     public static final int REGISTER_ACTIVITY = 1;
@@ -46,7 +46,7 @@ public class Context extends AbstractActivity implements BottomNavigationView.On
 
 
     public static void launch(android.content.Context context, int source) {
-        Intent intent = new Intent(context, Context.class);
+        Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ACT_SOURCE, source);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -157,8 +157,8 @@ public class Context extends AbstractActivity implements BottomNavigationView.On
                 return true;
             case R.id.menu_bottom_profile:
                 fm.beginTransaction().hide(active).show(profileFragment).commit();
-                profilePresenter.findUser();
-                active = profileFragment;
+   //             profilePresenter.findUser();
+     //           active = profileFragment;
                 scrollToolbarEnabled(true);
                 return true;
             case R.id.menu_bottom_add:

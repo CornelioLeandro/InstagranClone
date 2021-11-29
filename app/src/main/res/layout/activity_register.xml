@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".register.presentation.RegisterActivity">
+    tools:mainActivity=".register.presentation.RegisterActivity">
 
     <ScrollView
         android:id="@+id/register_scrollview"

@@ -69,6 +69,12 @@ public class HomeFragment extends AbstractFragment<HomeFragment> implements Main
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+       // homePresenter.findFeed();
+    }
+
+    @Override
     public void showFeed(List<Feed> response) {
     feedAdapter.setFeed(response);
     feedAdapter.notifyDataSetChanged();

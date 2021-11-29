@@ -75,6 +75,7 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
 
+
     }
 
     @Nullable
@@ -85,6 +86,12 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(postAdapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.findUser();
     }
 
     @Override

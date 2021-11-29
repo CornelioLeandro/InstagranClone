@@ -17,7 +17,7 @@ import android.widget.ScrollView;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.component.MediaHelper;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.main.presentation.Context;
+import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.register.presentation.datasource.RegisterDataSource;
 import com.leandro.instagram.register.presentation.datasource.RegisterLocalDataSource;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -124,7 +124,7 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
 
     @Override
     public void onUserCreated() {
-        Context.launch(this, Context.REGISTER_ACTIVITY);
+        MainActivity.launch(this, MainActivity.REGISTER_ACTIVITY);
     }
 
     @Override

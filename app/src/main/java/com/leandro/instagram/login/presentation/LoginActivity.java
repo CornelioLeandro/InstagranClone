@@ -11,14 +11,14 @@ import com.leandro.instagram.commom.view.AbstractActivity;
 import com.leandro.instagram.commom.component.LoadingButton;
 import com.leandro.instagram.login.datasource.LoginDataSource;
 import com.leandro.instagram.login.datasource.LoginLocalDataSource;
-import com.leandro.instagram.main.presentation.Context;
+import com.leandro.instagram.main.presentation.MainActivity;
 import com.leandro.instagram.register.presentation.RegisterActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-import static com.leandro.instagram.main.presentation.Context.launch;
+import static com.leandro.instagram.main.presentation.MainActivity.launch;
 
 public class LoginActivity extends AbstractActivity implements LoginView {
 
@@ -78,7 +78,7 @@ public class LoginActivity extends AbstractActivity implements LoginView {
 
     @Override
     public void onUserLogged() {
-        launch(this, Context.REGISTER_ACTIVITY);
+        launch(this, MainActivity.REGISTER_ACTIVITY);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 

@@ -1,15 +1,12 @@
 package com.leandro.instagram.main.camera.presentation;
 
 import android.content.Intent;
-import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 
 import androidx.annotation.NonNull;
@@ -19,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractActivity;
-import com.leandro.instagram.main.presentation.Context;
+import com.leandro.instagram.main.presentation.MainActivity;
 
 import butterknife.BindView;
 
@@ -30,9 +27,9 @@ public class AddActivity extends AbstractActivity implements AddView {
     @BindView(R.id.add_tab_layout)
     TabLayout tabLayout;
 
-    public static void launch(Context context) {
-        Intent intent = new Intent(context, AddActivity.class);
-        context.startActivity(intent);
+    public static void launch(MainActivity mainActivity) {
+        Intent intent = new Intent(mainActivity, AddActivity.class);
+        mainActivity.startActivity(intent);
     }
 
     @Override

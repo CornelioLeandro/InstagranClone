@@ -150,13 +150,16 @@ public class Database {
     }
 
     public Database createPost(String uuid, Uri uri, String caption) {
-        timeOut(() -> {
-            HashMap<String, HashSet<Post>> postsMap = Database.posts;
-            HashSet<Post> posts = postsMap.get(uuid);
+
+            HashMap<String, HashSet<Post>> postMap = Database.posts;
+
+            HashSet<Post> posts = postMap.get(uuid);
+
             if (posts == null) {
                 posts = new HashSet<>();
-                postsMap.put(uuid, posts);
+                postMap.put(uuid, posts);
             }
+
             Post post = new Post();
             post.setUri(uri);
             post.setCaption(caption);
@@ -165,39 +168,47 @@ public class Database {
             posts.add(post);
 
             HashMap<String, HashSet<String>> followersMap = Database.followers;
+
             HashSet<String> followers = followersMap.get(uuid);
-            if (followers != null) {
+
+            if (followers == null) {
                 followers = new HashSet<>();
                 followersMap.put(uuid, followers);
             } else {
+
                 HashMap<String, HashSet<Feed>> feedMap = Database.feed;
+
                 for (String follower : followers) {
                     HashSet<Feed> feeds = feedMap.get(follower);
+
                     if (feeds != null) {
                         Feed feed = new Feed();
                         feed.setUri(post.getUri());
                         feed.setCaption(post.getCaption());
-                        //feed.setPuvlichser
+
+                        // feed.setPublisher()
                         feed.setTimestamp(post.getTimestamp());
+
                         feeds.add(feed);
                     }
                 }
-
                 HashSet<Feed> feedMe = feedMap.get(uuid);
                 if (feedMe != null) {
                     Feed feed = new Feed();
                     feed.setUri(post.getUri());
                     feed.setCaption(post.getCaption());
+                    // feed.setPublisher()
                     feed.setTimestamp(post.getTimestamp());
                     feedMe.add(feed);
                 }
             }
             if (onSuccessListener != null)
                 onSuccessListener.onSuccess(null);
+
             if (onCompleteListener != null)
                 onCompleteListener.onComplete();
-        });
-       return this;
+
+        return this;
     }
 
     public Database createUser(String name, String email, String password) {

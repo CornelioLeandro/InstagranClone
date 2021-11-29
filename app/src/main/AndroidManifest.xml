@@ -28,7 +28,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Instagram" />
 
-        <activity android:name=".main.presentation.Context" />
+        <activity android:name=".main.presentation.MainActivity" />
         <activity android:name=".register.presentation.RegisterActivity" />
         <activity android:name=".login.presentation.LoginActivity">
             <intent-filter>
