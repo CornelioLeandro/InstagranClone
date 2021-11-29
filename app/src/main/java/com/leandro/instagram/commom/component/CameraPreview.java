@@ -1,6 +1,7 @@
 package com.leandro.instagram.commom.component;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -26,8 +27,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
+
         try {
             camera.setPreviewDisplay(holder);
+            camera.setDisplayOrientation(90);
             camera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,22 +44,22 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             camera.stopPreview();
             camera.setPreviewDisplay(holder);
+            Camera.Parameters parameters = camera.getParameters();
+            int f = format;
+            int w = width;
+            int h = height;
 
-            //Camera.Parameters parameters = camera.getParameters();
-            //int w = width;
-            //int h = height;
+            List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
+            for(Camera.Size size : supportedPreviewSizes){
+               Log.d("Teste camera", size.width + " " + size.height);
+                if (w <= size.width && h >= size.height)
+                    w = size.width;
+                    h = size.height;
+            }
 
-            //List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-            //for(Camera.Size size : supportedPreviewSizes){
-              //  Log.d("Teste camera", size.width + " " + size.height);
-                //if (size.width >= size.width && size.height > size.height)
-                  //  w = size.width;
-                    //h = size.height;
-            //}
-
-            //parameters.setPreviewSize(w, h);
-            //parameters.setPictureSize(w,h);
-            //camera.setParameters(parameters);
+            parameters.setPreviewSize(1920, 1080);
+            parameters.setPictureSize(1920,1080);
+            camera.setParameters(parameters);
 
             camera.startPreview();
         } catch (IOException e) {

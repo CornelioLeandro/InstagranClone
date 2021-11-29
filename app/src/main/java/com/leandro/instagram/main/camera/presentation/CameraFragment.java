@@ -21,6 +21,7 @@ import com.leandro.instagram.commom.component.MediaHelper;
 import com.leandro.instagram.commom.view.AbstractFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CameraFragment extends AbstractFragment {
 
@@ -41,12 +42,6 @@ public class CameraFragment extends AbstractFragment {
     public CameraFragment()  {
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,11 +58,22 @@ public class CameraFragment extends AbstractFragment {
         return view;
     }
 
-
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_profile,menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    public void onDestroy() {
+        super.onDestroy();
+        if (camera != null)
+            camera.release();
+    }
+
+    @OnClick({R.id.camera_image_view_picture})
+    public void onCameraButtonClick(){
+        progressBar.setVisibility(View.VISIBLE);
+        buttonCamera.setVisibility(View.GONE);
+        camera.takePicture(null, null, (data, camera) -> {
+            mediaHelper.saveCameraFile(data);
+            progressBar.setVisibility(View.GONE);
+            buttonCamera.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override
