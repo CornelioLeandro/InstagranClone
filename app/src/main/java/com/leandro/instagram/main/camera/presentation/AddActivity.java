@@ -3,6 +3,7 @@ package com.leandro.instagram.main.camera.presentation;
 import android.content.Intent;
 import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import com.leandro.instagram.main.presentation.Context;
 
 import butterknife.BindView;
 
-public class AddActivity extends AbstractActivity {
+public class AddActivity extends AbstractActivity implements AddView {
     @BindView(R.id.add_viewpager)
     ViewPager viewPager;
 
@@ -55,20 +56,20 @@ public class AddActivity extends AbstractActivity {
             public void onTabSelected(@NonNull TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 viewPager.setCurrentItem(tab.getPosition());
-                Log.d("Teste","" + tab.getPosition());
+                Log.d("Teste", "" + tab.getPosition());
             }
         });
     }
 
     @Override
     protected void onInject() {
-    ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    viewPager.setAdapter(adapter);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
         GalleryFragment galleryFragment = new GalleryFragment();
         adapter.add(galleryFragment);
 
-        CameraFragment cameraFragment = new CameraFragment();
+        CameraFragment cameraFragment = new CameraFragment().newInstance(this);
         adapter.add(cameraFragment);
 
         adapter.notifyDataSetChanged();
@@ -82,7 +83,13 @@ public class AddActivity extends AbstractActivity {
         if (tabRight != null)
             tabRight.setText(getString(R.string.photo));
 
-        viewPager.setCurrentItem(adapter.getCount() -1);
+        viewPager.setCurrentItem(adapter.getCount() - 1);
+    }
+
+    @Override
+    public void onImageLoaded(Uri uri) {
+        AddCaptionActivity.lauch(this, uri);
+        finish();
     }
 
     @Override
@@ -99,4 +106,6 @@ public class AddActivity extends AbstractActivity {
     protected int getLayout() {
         return R.layout.activity_add;
     }
+
+
 }

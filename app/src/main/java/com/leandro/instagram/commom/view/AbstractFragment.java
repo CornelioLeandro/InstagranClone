@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.leandro.instagram.commom.util.Colors;
 import com.leandro.instagram.commom.util.Drawables;
+import com.leandro.instagram.main.camera.presentation.AddView;
 import com.leandro.instagram.main.home.presentation.HomePresenter;
 import com.leandro.instagram.main.profile.presentation.ProfilePresenter;
 

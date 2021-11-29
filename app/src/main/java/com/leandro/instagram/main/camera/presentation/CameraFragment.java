@@ -1,6 +1,7 @@
 package com.leandro.instagram.main.camera.presentation;
 
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,19 +39,30 @@ public class CameraFragment extends AbstractFragment {
     Button buttonCamera;
     private MediaHelper mediaHelper;
     private Camera camera;
+    private AddView addView;
 
-    public CameraFragment()  {
+    public CameraFragment() {
+    }
+
+    public CameraFragment newInstance(AddView addView) {
+        CameraFragment cameraFragment = new CameraFragment();
+        cameraFragment.setAddView(addView);
+        return cameraFragment;
+    }
+
+    private void setAddView(AddView addView) {
+        this.addView = addView;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        if (getContext() != null){
-            mediaHelper = MediaHelper.getInstace(this);
-            if (mediaHelper.checkCameraHardware(getContext())){
-                camera = mediaHelper.getCameraInstace();
-               CameraPreview cameraPreview = new CameraPreview(getContext(), camera);
+        if (getContext() != null) {
+            mediaHelper = MediaHelper.getInstance(this);
+            if (mediaHelper.checkCameraHardware(getContext())) {
+                camera = mediaHelper.getCameraInstance();
+                CameraPreview cameraPreview = new CameraPreview(getContext(), camera);
                 frameLayout.addView(cameraPreview);
             }
 
@@ -66,13 +78,15 @@ public class CameraFragment extends AbstractFragment {
     }
 
     @OnClick({R.id.camera_image_view_picture})
-    public void onCameraButtonClick(){
+    public void onCameraButtonClick() {
         progressBar.setVisibility(View.VISIBLE);
         buttonCamera.setVisibility(View.GONE);
         camera.takePicture(null, null, (data, camera) -> {
-            mediaHelper.saveCameraFile(data);
+            Uri uri = mediaHelper.saveCameraFile(data);
             progressBar.setVisibility(View.GONE);
             buttonCamera.setVisibility(View.VISIBLE);
+            if (uri != null)
+                addView.onImageLoaded(uri);
         });
     }
 

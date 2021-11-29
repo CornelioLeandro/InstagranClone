@@ -56,7 +56,7 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarDark();
-        mediaHelper = MediaHelper.getInstace(this)
+        mediaHelper = MediaHelper.getInstance(this)
                 .cropView(cropImageView)
                 .listener(this);
     }
@@ -106,7 +106,7 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cropViewEnabled(true);
-        MediaHelper mediaHelper = MediaHelper.getInstace(this);
+        MediaHelper mediaHelper = MediaHelper.getInstance(this);
         mediaHelper.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -134,14 +134,14 @@ public class RegisterActivity extends AbstractActivity implements RegisterView, 
 
     @Override
     public void showGallery() {
-        MediaHelper.getInstace(this)
+        MediaHelper.getInstance(this)
         .chooserGallery();
     }
 
     @OnClick(R.id.register_button_crop)
     public void onButtonCropClick(){
         cropViewEnabled(false);
-        MediaHelper.getInstace(this).cropImage(cropImageView);
+        MediaHelper.getInstance(this).cropImage(cropImageView);
     }
     @Override
     protected int getLayout() {

@@ -94,7 +94,7 @@ public class Database {
 
 
     public Database findFeed(String uuid) {
-        timeOut(() ->{
+        timeOut(() -> {
             HashMap<String, HashSet<Feed>> feed = Database.feed;
             HashSet<Feed> res = feed.get(uuid);
 
@@ -121,14 +121,17 @@ public class Database {
                     break;
                 }
             }
+
             if (onSuccessListener != null && res != null) {
                 onSuccessListener.onSuccess(res);
             } else if (onFailureListener != null) {
-                onFailureListener.onFailure(new IllegalArgumentException("Usuario nao encontrato"));
+                onFailureListener.onFailure(new IllegalArgumentException("Usuário não encontrado"));
             }
+
             if (onCompleteListener != null)
                 onCompleteListener.onComplete();
         });
+
         return this;
     }
 
@@ -146,40 +149,55 @@ public class Database {
         return this;
     }
 
-    public Database createPost(String uuid,Uri uri,String caption){
-        timeOut(() ->{
+    public Database createPost(String uuid, Uri uri, String caption) {
+        timeOut(() -> {
             HashMap<String, HashSet<Post>> postsMap = Database.posts;
             HashSet<Post> posts = postsMap.get(uuid);
-            if (posts == null){
+            if (posts == null) {
                 posts = new HashSet<>();
                 postsMap.put(uuid, posts);
             }
             Post post = new Post();
             post.setUri(uri);
             post.setCaption(caption);
-            post.setTimestamp(System.currentTimeMillis())
+            post.setTimestamp(System.currentTimeMillis());
             post.setUuid(String.valueOf(post.hashCode()));
             posts.add(post);
 
             HashMap<String, HashSet<String>> followersMap = Database.followers;
             HashSet<String> followers = followersMap.get(uuid);
-            if (followers != null){
+            if (followers != null) {
                 followers = new HashSet<>();
-                followersMap.put(uuid,followers);
-            }else {
+                followersMap.put(uuid, followers);
+            } else {
                 HashMap<String, HashSet<Feed>> feedMap = Database.feed;
-                for (String follower : followers){
+                for (String follower : followers) {
                     HashSet<Feed> feeds = feedMap.get(follower);
-                    if (feeds != null){
+                    if (feeds != null) {
                         Feed feed = new Feed();
                         feed.setUri(post.getUri());
                         feed.setCaption(post.getCaption());
-
+                        //feed.setPuvlichser
+                        feed.setTimestamp(post.getTimestamp());
+                        feeds.add(feed);
                     }
                 }
 
+                HashSet<Feed> feedMe = feedMap.get(uuid);
+                if (feedMe != null) {
+                    Feed feed = new Feed();
+                    feed.setUri(post.getUri());
+                    feed.setCaption(post.getCaption());
+                    feed.setTimestamp(post.getTimestamp());
+                    feedMe.add(feed);
+                }
             }
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(null);
+            if (onCompleteListener != null)
+                onCompleteListener.onComplete();
         });
+       return this;
     }
 
     public Database createUser(String name, String email, String password) {

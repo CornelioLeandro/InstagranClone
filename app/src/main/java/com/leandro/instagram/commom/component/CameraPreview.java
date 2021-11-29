@@ -26,11 +26,9 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceCreated(@NonNull SurfaceHolder holder) {
-
+    public void surfaceCreated(SurfaceHolder holder) {
         try {
             camera.setPreviewDisplay(holder);
-            camera.setDisplayOrientation(90);
             camera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,38 +36,36 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if (holder.getSurface() == null) return;
-
         try {
-            camera.stopPreview();
+            //camera.stopPreview();
             camera.setPreviewDisplay(holder);
+            camera.setDisplayOrientation(90);
+
             Camera.Parameters parameters = camera.getParameters();
-            int f = format;
             int w = width;
             int h = height;
 
             List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-            for(Camera.Size size : supportedPreviewSizes){
-               Log.d("Teste camera", size.width + " " + size.height);
-                if (w <= size.width && h >= size.height)
-                    w = size.width;
-                    h = size.height;
+            for (Camera.Size size : supportedPreviewSizes) {
+                Log.d("Teste", size.width + " " + size.height);
+                w = size.width;
+                h = size.height;
+                break;
             }
-
-            parameters.setPreviewSize(1920, 1080);
-            parameters.setPictureSize(1920,1080);
+            parameters.setPreviewSize(w, h);
+            parameters.setPictureSize(w, h);
             camera.setParameters(parameters);
-
             camera.startPreview();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+    public void surfaceDestroyed(SurfaceHolder holder) {
 
     }
 }
