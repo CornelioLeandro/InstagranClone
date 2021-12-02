@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/home_container_user_profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
@@ -18,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_container_user_photo"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_insta_profile_thin"
@@ -26,6 +29,7 @@
             app:civ_circle_background_color="@color/gray" />
 
         <TextView
+            android:id="@+id/home_container_user_username"
             style="@style/InstaTextViewBase"
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"
@@ -57,6 +61,7 @@
         android:id="@+id/home_container_user_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
@@ -80,9 +85,13 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/home_container_user_caption"
         style="@style/InstaTextViewBase"
+        android:background="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:paddingStart="8dp"

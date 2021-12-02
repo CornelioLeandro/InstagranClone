@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.model.Feed;
+import com.leandro.instagram.commom.model.User;
 import com.leandro.instagram.commom.view.AbstractFragment;
 import com.leandro.instagram.main.presentation.MainView;
 
@@ -127,16 +129,29 @@ public class HomeFragment extends AbstractFragment<HomeFragment> implements Main
     }
 
     private class PostViewHolder extends RecyclerView.ViewHolder {
+
+        private final ImageView imageUser;
+        private final TextView textViewCaption;
+        private final TextView textViewUsername;
         private final ImageView imagePost;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             imagePost = itemView.findViewById(R.id.profile_image_grid);
+            imageUser = itemView.findViewById(R.id.home_container_user_photo);
+            textViewCaption = itemView.findViewById(R.id.home_container_user_caption);
+            textViewUsername = itemView.findViewById(R.id.home_container_user_username);
         }
 
         public void bind(Feed feed) {
             // TODO: 19/11/2021
             this.imagePost.setImageURI(feed.getUri());
+            this.textViewCaption.setText(feed.getCaption());
+            User user = feed.getPublisher();
+            if (user != null) {
+                this.imageUser.setImageURI(user.getUri());
+                this.textViewUsername.setText(user.getName());
+            }
         }
     }
 }

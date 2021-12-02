@@ -27,41 +27,32 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Camera.Parameters params = camera.getParameters();
+
+        if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE)
+        {
+            params.set("orientation", "portrait");
+            camera.setDisplayOrientation(90);
+            params.setRotation(90);
+        }else {
+            params.set("orientation", "landscape");
+            camera.setDisplayOrientation(0);
+            params.setRotation(0);
+        }
+
+        camera.setParameters(params);
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        if (holder.getSurface() == null) return;
-        try {
-            //camera.stopPreview();
-            camera.setPreviewDisplay(holder);
-            camera.setDisplayOrientation(90);
 
-            Camera.Parameters parameters = camera.getParameters();
-            int w = width;
-            int h = height;
-
-            List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-            for (Camera.Size size : supportedPreviewSizes) {
-                Log.d("Teste", size.width + " " + size.height);
-                w = size.width;
-                h = size.height;
-                break;
-            }
-            parameters.setPreviewSize(w, h);
-            parameters.setPictureSize(w, h);
-            camera.setParameters(parameters);
-            camera.startPreview();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

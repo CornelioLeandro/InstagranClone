@@ -1,5 +1,6 @@
 package com.leandro.instagram.main.camera.presentation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import androidx.annotation.NonNull;
@@ -16,20 +18,23 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.view.AbstractActivity;
+import com.leandro.instagram.main.camera.datasource.GalleryDataSource;
+import com.leandro.instagram.main.camera.datasource.GalleryLocalDataSource;
 import com.leandro.instagram.main.presentation.MainActivity;
 
 import butterknife.BindView;
 
 public class AddActivity extends AbstractActivity implements AddView {
+
     @BindView(R.id.add_viewpager)
     ViewPager viewPager;
 
     @BindView(R.id.add_tab_layout)
     TabLayout tabLayout;
 
-    public static void launch(MainActivity mainActivity) {
-        Intent intent = new Intent(mainActivity, AddActivity.class);
-        mainActivity.startActivity(intent);
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, AddActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
@@ -39,18 +44,18 @@ public class AddActivity extends AbstractActivity implements AddView {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            Drawable ic_close = findDrawable(R.drawable.ic_close);
-            getSupportActionBar().setHomeAsUpIndicator(ic_close);
+            Drawable drawable = findDrawable(R.drawable.ic_close);
+            getSupportActionBar().setHomeAsUpIndicator(drawable);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(findColor(R.color.blueEnable));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
             @Override
-            public void onTabSelected(@NonNull TabLayout.Tab tab) {
+            public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 viewPager.setCurrentItem(tab.getPosition());
                 Log.d("Teste", "" + tab.getPosition());
@@ -58,15 +63,19 @@ public class AddActivity extends AbstractActivity implements AddView {
         });
     }
 
+
     @Override
     protected void onInject() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        GalleryFragment galleryFragment = new GalleryFragment();
+        GalleryDataSource galleryLocalDataSource = new GalleryLocalDataSource();
+        GalleryPresenter galleryPresenter = new GalleryPresenter(galleryLocalDataSource);
+
+        GalleryFragment galleryFragment = GalleryFragment.newInstance(this, galleryPresenter);
         adapter.add(galleryFragment);
 
-        CameraFragment cameraFragment = new CameraFragment().newInstance(this);
+        CameraFragment cameraFragment = CameraFragment.newInstance(this);
         adapter.add(cameraFragment);
 
         adapter.notifyDataSetChanged();
@@ -89,8 +98,9 @@ public class AddActivity extends AbstractActivity implements AddView {
         finish();
     }
 
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -103,6 +113,4 @@ public class AddActivity extends AbstractActivity implements AddView {
     protected int getLayout() {
         return R.layout.activity_add;
     }
-
-
 }

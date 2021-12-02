@@ -31,7 +31,7 @@ public class Database {
         feed = new HashMap<>();
         followers = new HashMap<>();
 
-        init();
+      // init();
     }
 
     public static Database getInstance() {

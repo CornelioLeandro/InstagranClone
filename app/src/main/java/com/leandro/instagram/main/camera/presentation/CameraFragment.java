@@ -44,7 +44,7 @@ public class CameraFragment extends AbstractFragment {
     public CameraFragment() {
     }
 
-    public CameraFragment newInstance(AddView addView) {
+    public static CameraFragment newInstance(AddView addView) {
         CameraFragment cameraFragment = new CameraFragment();
         cameraFragment.setAddView(addView);
         return cameraFragment;

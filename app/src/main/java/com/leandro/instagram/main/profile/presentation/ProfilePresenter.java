@@ -38,6 +38,8 @@ public class ProfilePresenter implements Presenter<UserProfile> {
                 String.valueOf(user.getFollowers()),
                 String.valueOf(user.getPosts())
         );
+
+        view.showPhoto(user.getUri());
         view.showPosts(posts);
         if (user.getUri() != user.getUri()) ;
     }

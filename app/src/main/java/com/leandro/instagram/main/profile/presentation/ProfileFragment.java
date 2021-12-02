@@ -16,8 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.leandro.instagram.R;
 import com.leandro.instagram.commom.model.Post;
 import com.leandro.instagram.commom.view.AbstractFragment;
@@ -50,6 +52,10 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
     @BindView(R.id.profile_recycler)
     RecyclerView recyclerView;
 
+    @BindView(R.id.profile_navigation_tabs)
+    BottomNavigationView bottomNavigationView;
+
+
     private PostAdapter postAdapter;
     private MainView mainView;
     private ProfilePresenter profilePresenter;
@@ -74,8 +80,17 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-
-
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.menu_profile_grid:
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+                    return true;
+                case R.id.menu_profile_list:
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    return true;
+            }
+            return false;
+        });
     }
 
     @Nullable
@@ -119,9 +134,7 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
     public void showPosts(List<Post> posts) {
         postAdapter.setPosts(posts);
         postAdapter.notifyDataSetChanged();
-
     }
-
 
     @Override
     public void showProgressBar() {
@@ -171,11 +184,12 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
     }
 
     private class PostViewHolder extends RecyclerView.ViewHolder {
+
         private final ImageView imagePost;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagePost = itemView.findViewById(R.id.profileImage_grid);
+            imagePost = itemView.findViewById(R.id.gallery_Image_grid);
         }
 
         public void bind(Post post) {
