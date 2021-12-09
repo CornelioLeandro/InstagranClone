@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.leandro.instagram.R;
+import com.leandro.instagram.commom.model.Database;
 import com.leandro.instagram.commom.model.Post;
 import com.leandro.instagram.commom.view.AbstractFragment;
 import com.leandro.instagram.main.presentation.MainView;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends AbstractFragment<ProfilePresenter> implements MainView.ProfileView {
@@ -54,6 +58,9 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
 
     @BindView(R.id.profile_navigation_tabs)
     BottomNavigationView bottomNavigationView;
+
+    @BindView(R.id.profile_button_edit_perfil)
+    Button button_edit_perfil;
 
 
     private PostAdapter postAdapter;
@@ -81,9 +88,9 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()){
+            switch (menuItem.getItemId()) {
                 case R.id.menu_profile_grid:
-                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                     return true;
                 case R.id.menu_profile_list:
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -122,12 +129,31 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
         }
     }
 
+
     @Override
-    public void showData(String name, String following, String followers, String posts) {
+    public void showData(String name, String following, String followers, String posts, boolean editProfile, boolean follow) {
         txtUsername.setText(name);
         txtFollowersCount.setText(followers);
         txtFollowingCount.setText(following);
         txtPostCount.setText(posts);
+
+        if (editProfile) {
+            button_edit_perfil.setText(R.string.edit_profile);
+        } else if (follow) {
+            button_edit_perfil.setText(R.string.unfollow);
+            button_edit_perfil.setTag(false);
+        } else {
+            button_edit_perfil.setText(R.string.follow);
+            button_edit_perfil.setTag(true);
+        }
+    }
+
+    @OnClick(R.id.profile_button_edit_perfil)
+    public void onButtonFollowClick(){
+        Boolean follow = (Boolean) button_edit_perfil.getTag();
+        button_edit_perfil.setText(follow ? R.string.unfollow : R.string.follow);
+        presenter.follow(follow);
+        button_edit_perfil.setTag(!follow);
     }
 
     @Override
@@ -157,6 +183,16 @@ public class ProfileFragment extends AbstractFragment<ProfilePresenter> implemen
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (!presenter.getUser().equals(Database.getInstance().getUser().getUUID()))
+                    mainView.disposeProfileDetail();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
 

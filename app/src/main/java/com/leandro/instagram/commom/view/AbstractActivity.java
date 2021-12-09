@@ -63,12 +63,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements View
         }
     }
 
-
-
     protected abstract @LayoutRes
     int getLayout();
 
     protected abstract void onInject();
-
 
 }

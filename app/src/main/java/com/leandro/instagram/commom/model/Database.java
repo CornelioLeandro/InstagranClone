@@ -31,7 +31,20 @@ public class Database {
         feed = new HashMap<>();
         followers = new HashMap<>();
 
-      // init();
+        String email = "user1@gmail.com";
+        String password = "123";
+        String name = "Leandro";
+        init(email, password, name);
+
+        for (int i = 0; i < 30; i++) {
+            email = "user" + i + "@gmail.com";
+            password = "123" + i;
+            name = "Leandro" + i;
+            init(email, password, name);
+        }
+        ;
+
+        // init();
     }
 
     public static Database getInstance() {
@@ -42,11 +55,7 @@ public class Database {
         //return INSTANCE;
     }
 
-    private static void init() {
-        String email = "user1@gmail.com";
-        String password = "123";
-        String name = "Leandro Silva";
-
+    private static void init(String email, String password, String name) {
         UserAuth userAuth = new UserAuth();
         userAuth.setEmail(email);
         userAuth.setPassword(password);
@@ -73,6 +82,65 @@ public class Database {
 
     public <T> Database addOnCompleteListener(OncCompleteListener listener) {
         this.onCompleteListener = listener;
+        return this;
+    }
+
+    public Database follow(String uuidME, String uuid) {
+        timeOut(() -> {
+            HashMap<String, HashSet<String>> followersMap = Database.followers;
+            HashSet<String> followers = followersMap.get(uuid);
+
+            if (followers == null) {
+
+                followers = new HashSet<>();
+                followersMap.put(uuid, followers);
+            }
+            followers.add(uuidME);
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(true);
+        });
+        return this;
+    }
+
+    public Database unfollow(String uuidME, String uuid) {
+        timeOut(() -> {
+            HashMap<String, HashSet<String>> followersMap = Database.followers;
+            HashSet<String> followers = followersMap.get(uuid);
+
+            if (followers == null) {
+
+                followers = new HashSet<>();
+                followersMap.put(uuid, followers);
+            }
+            followers.remove(uuidME);
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(true);
+        });
+        return this;
+    }
+
+
+    public Database following(String uuidMe, String uuid) {
+        timeOut(() -> {
+            HashMap<String, HashSet<String>> followers = Database.followers;
+
+            HashSet<String> followersOfUser = followers.get(uuid);
+            if (followersOfUser == null)
+                followersOfUser = new HashSet<>();
+            boolean following = false;
+            for (String userUuid : followersOfUser) {
+                if (userUuid.equals(uuidMe)) {
+                    following = true;
+                    break;
+                }
+            }
+            if (onSuccessListener != null)
+                onSuccessListener.onSuccess(following);
+            else if (onFailureListener != null)
+                onFailureListener.onFailure(new IllegalArgumentException("Usuario não encontrato"));
+            if (onCompleteListener != null)
+                onCompleteListener.onComplete();
+        });
         return this;
     }
 
@@ -110,7 +178,22 @@ public class Database {
         return this;
     }
 
-    // select * from users where uuid = ?
+    public Database findUsers(String uuid, String query) {
+        timeOut(() -> {
+            ArrayList<User> users = new ArrayList<>();
+            for (User user : Database.users) {
+                if (!user.getUuid().equals(uuid) && user.getName().contains(query)) {
+                    users.add(user);
+                }
+            }
+
+            onSuccessListener.onSuccess(users);
+            onCompleteListener.onComplete();
+        });
+        return this;
+    }
+
+    // select * from users where uuid = ? encontra o usuario logado
     public Database findUser(String uuid) {
         timeOut(() -> {
             Set<User> users = Database.users;
@@ -151,62 +234,62 @@ public class Database {
 
     public Database createPost(String uuid, Uri uri, String caption) {
 
-            HashMap<String, HashSet<Post>> postMap = Database.posts;
+        HashMap<String, HashSet<Post>> postMap = Database.posts;
 
-            HashSet<Post> posts = postMap.get(uuid);
+        HashSet<Post> posts = postMap.get(uuid);
 
-            if (posts == null) {
-                posts = new HashSet<>();
-                postMap.put(uuid, posts);
-            }
+        if (posts == null) {
+            posts = new HashSet<>();
+            postMap.put(uuid, posts);
+        }
 
-            Post post = new Post();
-            post.setUri(uri);
-            post.setCaption(caption);
-            post.setTimestamp(System.currentTimeMillis());
-            post.setUuid(String.valueOf(post.hashCode()));
-            posts.add(post);
+        Post post = new Post();
+        post.setUri(uri);
+        post.setCaption(caption);
+        post.setTimestamp(System.currentTimeMillis());
+        post.setUuid(String.valueOf(post.hashCode()));
+        posts.add(post);
 
-            HashMap<String, HashSet<String>> followersMap = Database.followers;
+        HashMap<String, HashSet<String>> followersMap = Database.followers;
 
-            HashSet<String> followers = followersMap.get(uuid);
+        HashSet<String> followers = followersMap.get(uuid);
 
-            if (followers == null) {
-                followers = new HashSet<>();
-                followersMap.put(uuid, followers);
-            } else {
+        if (followers == null) {
+            followers = new HashSet<>();
+            followersMap.put(uuid, followers);
+        } else {
 
-                HashMap<String, HashSet<Feed>> feedMap = Database.feed;
+            HashMap<String, HashSet<Feed>> feedMap = Database.feed;
 
-                for (String follower : followers) {
-                    HashSet<Feed> feeds = feedMap.get(follower);
+            for (String follower : followers) {
+                HashSet<Feed> feeds = feedMap.get(follower);
 
-                    if (feeds != null) {
-                        Feed feed = new Feed();
-                        feed.setUri(post.getUri());
-                        feed.setCaption(post.getCaption());
-
-                        // feed.setPublisher()
-                        feed.setTimestamp(post.getTimestamp());
-
-                        feeds.add(feed);
-                    }
-                }
-                HashSet<Feed> feedMe = feedMap.get(uuid);
-                if (feedMe != null) {
+                if (feeds != null) {
                     Feed feed = new Feed();
                     feed.setUri(post.getUri());
                     feed.setCaption(post.getCaption());
+
                     // feed.setPublisher()
                     feed.setTimestamp(post.getTimestamp());
-                    feedMe.add(feed);
+
+                    feeds.add(feed);
                 }
             }
-            if (onSuccessListener != null)
-                onSuccessListener.onSuccess(null);
+            HashSet<Feed> feedMe = feedMap.get(uuid);
+            if (feedMe != null) {
+                Feed feed = new Feed();
+                feed.setUri(post.getUri());
+                feed.setCaption(post.getCaption());
+                // feed.setPublisher()
+                feed.setTimestamp(post.getTimestamp());
+                feedMe.add(feed);
+            }
+        }
+        if (onSuccessListener != null)
+            onSuccessListener.onSuccess(null);
 
-            if (onCompleteListener != null)
-                onCompleteListener.onComplete();
+        if (onCompleteListener != null)
+            onCompleteListener.onComplete();
 
         return this;
     }

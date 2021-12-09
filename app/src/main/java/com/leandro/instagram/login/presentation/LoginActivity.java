@@ -78,7 +78,7 @@ public class LoginActivity extends AbstractActivity implements LoginView {
 
     @Override
     public void onUserLogged() {
-        launch(this, MainActivity.REGISTER_ACTIVITY);
+        launch(this, MainActivity.LOGIN_ACTIVITY);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
